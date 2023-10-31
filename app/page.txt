@@ -1,0 +1,311 @@
+
+//it describes the whole project with comments
+"use client";
+import React, { useState } from "react";
+import { render } from "react-dom";
+
+const page = () => {
+  
+
+//=================================================================================================
+// STEP-5
+
+
+  // this is how we make variables in react for storing the input by using useState hook and store it ,in react below
+  // below is the usestate snippet
+  // never leave the space between the "" as it gives error above below
+  const [title, settitle] = useState("");
+  const [desc, setdesc] = useState("");
+  // desc- is the description
+
+
+  // STEP-5 COMPLETED
+  // =======================================================================================================
+  
+  
+  // ===========================================================================
+  // STEP-10
+  const [mainTask, setMainTask] = useState([]);
+  // the above  useState([]) takes up an empty array
+  // the mainTask consist of desc and title both and it will make many containers
+  // of mainTask input
+
+  // STEP-10 COMPLETED
+  // =======================================================================
+
+  // =======================================================================
+  // STEP-9
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // it helps from preventing the reloading and loss of data above-imp
+    console.log(title)
+    console.log(desc)
+    //above the title and desc will be printed in the console
+
+
+
+    // ========================================================================
+    // STEP-13
+    // above after filling the form and seeing our input in console we also need to empty the form
+    // then what to do below is the solution
+    // by this the inputs will become blank for further inputs taking of todo list below
+    setMainTask([...mainTask, { title, desc }]);
+    // ...mainTask is an array where all the task, means title and desc will
+    // be stored above
+    // and {}, curly braces as a whole is an obj which consist of title and desc
+    settitle("");
+    setdesc("");
+    console.log(mainTask);
+    // above it prints title and desc in console,as an obj when we click add task and then 
+    // it reloads and everything disappears from frontend but every obj that has been taken
+    // as an input can be seen on console
+  };
+
+  //STEP-13 COMPLETED 
+  // ====================================================================
+
+
+
+  // STEP-9 COMPLETED
+  // ==========================================================================
+
+
+  // ==========================================================================
+  // STEP-16
+  const deleteHandler = (i) => {
+    // above i is the index passed 
+    let copytask = [...mainTask];
+    // here we have copied the mainTask array in the copytask above whole
+    copytask.splice(i, 1);
+    // above we have passed index and 1 obj means mainTask will be deleted when
+    // clicked on delete button on frontend
+    // splice is an method used to remove the element within the given array means kindof splitting from the given array above
+    // syntax of splice-arr.splice(2,3)
+    // above syntax means 2 is the index 
+    setMainTask(copytask);
+  };
+
+  // STEP-16 COMPLETED
+  // ===================================================================
+
+
+
+  // ==========================================================================
+  // STEP-12
+  let renderTask = <h2>No Task Available</h2>;
+  // be default above if no task is taken then it prints h2 value from above
+
+  // STEP-12 COMPLETED
+  // ======================================================================
+  
+  
+
+
+  // ========================================================================
+  // STEP-14
+  // below if is a checker 
+  if (mainTask.length > 0) {
+    renderTask = mainTask.map((t, i) => {
+      // above t is the task from input and i is the index and all the task from 
+      // map function will be go to renderTask and renderTask will get whatever
+      //  we have returned from the below statement of return
+      return (
+        <li key={i} className="flex items-center justify-between mb-8">
+          {/* above li has been given key {i}(i is the index,) so that react can differentiate
+          every obj differently */}
+          <div className="flex items-center justify-between  w-2/3">
+            {/* w-2/3->because of this the desc appears at the given positon on the frontened after adding above */}
+            <h5 className="text-2xl font-semibold">{t.title}</h5>
+            <h6 className="text-lg font-medium">{t.desc}</h6>
+            {/* above we have returned div container which consist of title and 
+            desc from h5 and h6 and when we click on addTask on frontend 
+            the output can be seen on the frontened  */}
+          </div>
+
+        {/* STEP- 14 COMPLETED */}
+        {/* ============================================================== */}
+          
+          
+
+        {/* ============================================================== */}
+        {/* STEP-15 */}
+          
+          <button
+          // below is onClick fun means when we click on the fun the deleteHandler fun
+          // should work
+            onClick={() => {
+              deleteHandler(i);
+              // the above deletehandler i index will go to deleteHandler fun and from 
+              // their it will delete.
+              // we always need a function or arrow function for deleteHandler as, 
+              // if we do not use the arrow function or function it will directly delete 
+              // or will automatically delete the latest one todo list above inside
+              //  the onclick function
+
+            }}
+            className="bg-red-400 text-white px-4 py-2 rounded font-bold "
+          >
+            Delete
+          </button>
+          {/* STEP-15 COMPLETED */}
+          {/* ========================================================== */}
+        </li>
+      );
+      // it means in renderTask we are iterating the mainTask it the element and it's key later then we are returning the title and description of the task on the frontened after submitting the task by the button which will be displayed on the frontened
+    });
+  }
+
+  return (
+
+
+    // ==========================================================================================
+    // STEP-1
+
+    <>
+     
+        <h1 className="bg-purple-300 text-purple-900 p-5 text-7xl font-bold text-center">
+          TO DO LIST
+        </h1>
+        {/* text-5lx-  is done to increase the size of the text  */}
+        {/* STEP-1 COMPLETED */}
+        {/* ============================================================================================ */}
+
+
+        {/* ============================================================================================== */}
+        {/* STEP-2 */}
+
+
+
+        {/* ===================================================================== */}
+        {/* STEP-8 */}
+
+        <form onSubmit={submitHandler}>
+          {/* above now we have onSubmit where we have a fun named as submitHandler
+          and this has been made because when we click on to addTask our data 
+          reloads and our input disappears so to prevent this the fun has been made
+          */}
+
+        {/* STEP-8 COMPLETED */}
+        {/* ================================================================= */}
+
+              <div>
+                
+              </div>
+        
+            
+              <input
+                type="text"
+                className="text-2xl border-zinc-800 border-4 m-8 px-4 py-2"
+                placeholder="Enter Title here"
+
+
+
+                // ===================================================================================
+                // {/* STEP-6 */}
+                value={title}
+                // value above has title in it because of which the value won't take the input because this 
+                // title has used useState which does not consist of any value
+              
+                // note- two way binding is done so that even the react can know what things are being taken as 
+                // an input and by this only the virtual dom will get to know the changes done 
+                
+                // below is two way binding-means we are telling react as well as user
+                // that we are doing changes
+                // below onchange function means jab jab mai value change karunga tab tab mujhe kuch milna 
+                // chaiye
+                // e- is the elum here
+                onChange={(e) => {
+                  settitle(e.target.value);
+                  // console.log(e)
+                  // above is the elum which gives the object
+
+                  // console.log(e.target)
+                  // above gives the detail of the input and it's tailwind css and information that we 
+                  // typed- it basically displays the whole input tag
+
+                  // console.log(e.target.value);
+                  // above output
+                  // if we type brush as an input in title and our output in console will be
+                  // b
+                  // r
+                  // u
+                  // s
+                  // h
+                }}
+
+                // STEP-6 COMPLETED
+                // ===============================================================================
+
+
+
+              />
+              {/* STEP-2 COMPLETED */}
+              {/* ========================================================================== */}
+
+
+
+              {/* ========================================================================== */}
+              {/* STEP-3 */}
+
+              <input
+                type="text"
+                className="text-2xl  border-zinc-800 border-4 m-8 px-4 py-2"
+                placeholder="Enter Description here"
+
+
+                // ==================================================================
+                // STEP-7
+                value={desc}
+                onChange={(e) => {
+                  setdesc(e.target.value);
+                  // and by above statement we are storing the taken up value, that we have
+                  // taken as an input and  stores in setdesc function of useState
+                }}
+
+        
+                
+
+            //STEP- 7 COMPLETED 
+            // ============================================================
+          />
+
+          {/* STEP-3 COMPLETED */}
+          {/* ================================================================================ */}
+
+          
+          {/* ==================================================================================== */}
+          {/* STEP-4  */}
+          <br></br>
+          <div className="from-pink-500" >
+            <button className="bg-purple-300 text-purple-500  rounded-full py-3 px-6 font-bold  m-5" >
+              Add Task
+            </button>
+          </div>
+
+          {/* text-2lx- is double excel */}
+        </form>
+
+
+        {/* STEP-4 COMPLETED */}
+        {/* ========================================================================================== */}
+
+        <hr />
+
+        {/*===================================================================  */}
+        {/* STEP -11 */}
+        <div className="  bg-pink-200 h-screen p-6">
+          
+          <ul>{renderTask}</ul>
+          {/* the renderTask h2 will be only when printed from step -12 ,
+          by the above statement only */}
+          </div>
+      
+
+        {/* step-11  COMPLETED */}
+        {/* =================================================================== */}
+    
+    </>
+  );
+};
+
+export default page;
